@@ -85,7 +85,7 @@ function install_tool {
   local tool=$1
   local tool_repo=$tools[$tool]
   local tool_path="${XDG_CONFIG_HOME}/${tool}"
-  local config_path="${tool_path}/configure.zsh"
+  local config_path="${tool_path}/${CONFIG_SCRIPT_NAME}.zsh"
 
   echo $tool_path
   if [ -d $tool_path ]; then
