@@ -10,6 +10,8 @@ GITHUB_HOST=${GITHUB_HOST:-$GITHUB_HTTPS}
 INSTALLER_URL=${INSTALLER_URL:-"${GITHUB_HTTPS}${INSTALLER_REPO}/tree/main/"}
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-"$HOME/.config"}
 INSTALLER_USER_REPOS_URL=${INSTALLER_USER_REPOS_URL:-"https://api.github.com/users/${INSTALLER_USER}/repos"}
+CONFIG_SCRIPT_NAME=${CONFIG_SCRIPT_NAME:-"configure.zsh"}
+
 URL_FIELD="clone_url"
 PRINT_HELP=${PRINT_HELP:-0}
 PRINT_LIST=${PRINT_LIST:-0}
@@ -107,6 +109,7 @@ function install_tool {
 
   if [ -f $config_path ]; then
     echo "\033[34m  Running repo configure script\033[0m"
+    chmod +x $config_path
     echo source $config_path
   fi
   echo "\033[32m ✓ Done with \033[32;1m${tool}\033[0m"
