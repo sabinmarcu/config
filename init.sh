@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
+CONFIG_PREFIX=${CONFIG_PREFIX:-"config"}
 INSTALLER_USER=${INSTALLER_USER:-"sabinmarcu"}
-INSTALLER_REPO=${INSTALLER_REPO:-"${INSTALLER_USER}/config"}
+INSTALLER_REPO=${INSTALLER_REPO:-"${INSTALLER_USER}/${CONFIG_PREFIX}"}
 GITHUB_DOMAIN=${GITHUB_DOMAIN:-"github.com"}
 GITHUB_SSH=${GITHUB_SSH:-"git@${GITHUB_DOMAIN}:"}
 GITHUB_HTTPS=${GITHUB_HTTPS:-"https://${GITHUB_DOMAIN}/"}
@@ -61,14 +62,14 @@ function read_url {
   fi
 }
 
-repos_list=(${(@f)$(read_url $INSTALLER_USER_REPOS_URL &> /dev/null | grep "config" | grep "${URL_FIELD}" | tr -s " " | cut -d " " -f3 | sed -E "s/\"(.*)\",?/\1/")})
+repos_list=(${(@f)$(read_url $INSTALLER_USER_REPOS_URL &> /dev/null | grep "${CONFIG_PREFIX}" | grep "${URL_FIELD}" | tr -s " " | cut -d " " -f3 | sed -E "s/\"(.*)\",?/\1/")})
 
 echo $repos_list
 
 
 typeset -A tools=()
 for repo in $repos_list; do
-  repo_short=$(echo $repo | sed -E "s/.*(config\..*)\.git$/\1/")
+  repo_short=$(echo $repo | sed -E "s/.*(${CONFIG_PREFIX}\..*)\.git$/\1/")
   tool=$(echo $repo_short | cut -d "." -f2)
   tools+=(
     $tool $repo
